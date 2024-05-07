@@ -32,4 +32,9 @@ public class UserService {
 	public User fromUser(User obj) {
 		return new User(obj.getId(), obj.getName(), obj.getEmail(), obj.getAddress(), obj.getDateOfBirth(), obj.getAge(), obj.getCountryOfBirth());
 	}
+	
+	public void delete(String id) {
+		findById(id);
+		repo.deleteById(id);
+	}
 }
