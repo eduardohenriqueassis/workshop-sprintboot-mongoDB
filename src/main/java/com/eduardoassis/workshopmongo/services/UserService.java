@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.eduardoassis.workshopmongo.domain.User;
+import com.eduardoassis.workshopmongo.dto.UserDTO;
 import com.eduardoassis.workshopmongo.repository.UserRepository;
 import com.eduardoassis.workshopmongo.services.exception.ObjectNotFoundException;
 
@@ -29,12 +30,32 @@ public class UserService {
 		return repo.insert(obj);
 	}
 	
-	public User fromUser(User obj) {
-		return new User(obj.getId(), obj.getName(), obj.getEmail(), obj.getAddress(), obj.getDateOfBirth(), obj.getAge(), obj.getCountryOfBirth());
+	public User fromDTO(UserDTO objDTO) {
+		return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail(), objDTO.getAddress(), objDTO.getDateOfBirth(), objDTO.getAge(), objDTO.getCountryOfBirth());
 	}
 	
 	public void delete(String id) {
 		findById(id);
 		repo.deleteById(id);
+	}
+	
+	public User update(User obj){
+		
+		Optional<User> newOptional = repo.findById(obj.getId());
+		
+			User updatedUser = newOptional.get();
+			updateData(updatedUser, obj);
+			return repo.save(updatedUser);
+		
+	}
+
+	private void updateData(User updatedUser, User obj) {
+		updatedUser.setName(obj.getName());
+		updatedUser.setEmail(obj.getEmail());
+		updatedUser.setAddress(obj.getAddress());
+		updatedUser.setDateOfBirth(obj.getDateOfBirth());
+		updatedUser.setAge(obj.getAge());
+		updatedUser.setCountryOfBirth(obj.getCountryOfBirth());
+		
 	}
 }

@@ -10,17 +10,26 @@ public class UserDTO implements Serializable{
 	private String id;
 	private String name;
 	private String email;
-
+	private String address;
+	private String dateOfBirth;
+	private String age;
+	private String countryOfBirth;
 	
 	public UserDTO() {
 		
 	}
 	
-	public UserDTO (User obj) {
-		id = obj.getId();
-		name = obj.getName();
-		email = obj.getEmail();
-		
+	
+
+	public UserDTO(User obj) {
+		super();
+		this.id = obj.getId();
+		this.name = obj.getName();
+		this.email = obj.getEmail();
+		this.address = obj.getAddress();
+		this.dateOfBirth = obj.getDateOfBirth();
+		this.age = obj.getAge();
+		this.countryOfBirth = obj.getCountryOfBirth();
 	}
 
 	public String getId() {
@@ -46,6 +55,37 @@ public class UserDTO implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public String getCountryOfBirth() {
+		return countryOfBirth;
+	}
+
+	public void setCountryOfBirth(String countryOfBirth) {
+		this.countryOfBirth = countryOfBirth;
+	}
+	
 }

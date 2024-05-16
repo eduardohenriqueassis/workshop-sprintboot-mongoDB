@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,6 @@ public class UserResource {
 
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> findAll(){
-		
 		List<User> list = service.findAll();
 		List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
@@ -37,14 +37,13 @@ public class UserResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable String id){
 		User obj = service.findById(id);
-		
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody User fromUserObj){
-		User obj = service.fromUser(fromUserObj);
-		obj = service.insert(fromUserObj);
+	public ResponseEntity<Void> insert(@RequestBody UserDTO objDTO){
+		User obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 		
@@ -55,6 +54,16 @@ public class UserResource {
 		service.delete(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@RequestBody UserDTO fromUserObj, @PathVariable String id){
+		User obj = service.fromDTO(fromUserObj);
+		System.out.println("Id " + id);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+		
 	}
 		
 }
