@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.eduardoassis.workshopmongo.domain.Post;
 import com.eduardoassis.workshopmongo.domain.User;
+import com.eduardoassis.workshopmongo.dto.AuthorDTO;
 import com.eduardoassis.workshopmongo.repository.PostRepository;
 import com.eduardoassis.workshopmongo.repository.UserRepository;
 
@@ -34,11 +35,12 @@ public class Instantiation implements ApplicationRunner{
 		User maria = new User(null, "Maria Brown", "maria@gmail.com", "Rua 2, 978", "10-08-1973", "50", "Brazil");
 		User alex = new User(null, "Alex Green", "alex@gmail.com", "Rua 3, 978", "10-07-1979", "45", "Portugal");
 		User bob = new User(null, "Bob Grey", "bob@gmail.com", "Rua 4, 978", "10-03-1993", "31", "Brazil");
-
-		Post post1 = new Post(null, sdf.parse("19/05/2024"), "Partiu Viajem", "Vou viajar para Paris!!!!", maria);
-		Post post2 = new Post(null, sdf.parse("19/05/2024"), "Bom dia", "Acordei felizão hoje!!", maria);
 		
 		userRepository.saveAll(Arrays.asList(maria, alex, bob));
+		
+		Post post1 = new Post(null, sdf.parse("19/05/2024"), "Partiu Viajem", "Vou viajar para Paris!!!!", new AuthorDTO(maria));
+		Post post2 = new Post(null, sdf.parse("19/05/2024"), "Bom dia", "Acordei felizão hoje!!", new AuthorDTO(maria));
+		
 		postRepository.saveAll(Arrays.asList(post1, post2));
 	}
 
