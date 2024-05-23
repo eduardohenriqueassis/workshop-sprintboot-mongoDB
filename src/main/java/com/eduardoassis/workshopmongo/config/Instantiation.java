@@ -42,6 +42,8 @@ public class Instantiation implements ApplicationRunner{
 		Post post2 = new Post(null, sdf.parse("19/05/2024"), "Bom dia", "Acordei felizão hoje!!", new AuthorDTO(maria));
 		
 		postRepository.saveAll(Arrays.asList(post1, post2));
+		maria.getPosts().addAll(Arrays.asList(post1, post2));
+		userRepository.save(maria);
 	}
 
 }
